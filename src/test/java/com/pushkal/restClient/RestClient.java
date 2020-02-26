@@ -1,7 +1,7 @@
 package com.pushkal.restClient;
 
+import static io.restassured.RestAssured.given;
 import java.util.Map;
-
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
@@ -11,7 +11,7 @@ import io.restassured.specification.RequestSpecification;
 public class RestClient {
 	
 	public RequestSpecification createRequestSpecification(String contentType) {
-		RequestSpecification reqSpec = RestAssured.given();
+		RequestSpecification reqSpec = given();
 		if (contentType != null) {
 			if (contentType.equalsIgnoreCase("JSON")) {
 				reqSpec.contentType(ContentType.JSON);
@@ -20,6 +20,7 @@ public class RestClient {
 			} else if (contentType.equalsIgnoreCase("TEXT")) {
 				reqSpec.contentType(ContentType.TEXT);
 			}
+			else throw new IllegalArgumentException("Invalid content type : "+contentType);
 		}
 		return reqSpec;
 	}
@@ -110,10 +111,8 @@ public class RestClient {
 		case "DELETE":
 			response = reqSpec.delete();
 			break;
-
 		default:
 			System.out.println("Please pass the corrent http method....");
-			break;
 		}
 		
 		return response;

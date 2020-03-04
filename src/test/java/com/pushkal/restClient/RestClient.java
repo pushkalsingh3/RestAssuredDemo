@@ -90,8 +90,8 @@ public class RestClient {
 	}
 	
 	public Response executeRequest(String httpMethod, String baseURI, String basePath, String token,
-			Map<String, String> headers, String body) {
-		RequestSpecification reqSpec = createRequestSpecification();
+			Map<String, String> headers, String body, String contentType) {
+		RequestSpecification reqSpec = createRequestSpecification(contentType);
 		setBaseURI(reqSpec, baseURI);
 		setBasePath(reqSpec, basePath);
 		addAuthorization(reqSpec, token);
@@ -112,7 +112,7 @@ public class RestClient {
 			response = reqSpec.delete();
 			break;
 		default:
-			System.out.println("Please pass the corrent http method....");
+			System.out.println("Please pass the correct http method....");
 		}
 		
 		return response;
